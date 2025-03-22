@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Push to Docker Hub') {
             steps {
-                sh 'docker tag flask-app:latest hruthingali/flask-app20:latest'
+                sh 'docker tag flask-app20:latest hruthingali/flask-app20:latest'
                 sh 'docker push hruthingali/flask-app20:latest'
             }
         }
