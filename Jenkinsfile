@@ -1,8 +1,7 @@
 pipeline {
     agent any
     environment {
-        IMAGE_NAME = "flask-app20"
-        IMAGE_TAG = "latest"
+        DOCKER_IMAGE = 'hruthingali/flask-app20:latest'
     }
     stages {
         stage('Clone Repository') {
@@ -12,13 +11,13 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t flask-app20:latest .'
+                sh 'docker build -t $DOCKER_IMAGE .'
             }
         }
         stage('Push to Docker Hub') {
             steps {
-                sh 'docker tag flask-app20:latest hruthingali/flask-app20:latest'
-                sh 'docker push hruthingali/flask-app20:latest'
+                withDockerRegistry([credentialsId: 'docker-hub-credentials', url: 'https://index.docker.io/v1/']) {
+                    sh 'docker push $DOCKER_IMAGE'
             }
         }
         stage('Deploy to Kubernetes') {
