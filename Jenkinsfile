@@ -8,7 +8,6 @@ pipeline {
         stage('Clone Repository') {
             steps {
                git branch: 'main', url: 'https://github.com/hruthingali/jdkub-1.git'
-'
             }
         }
         stage('Build Docker Image') {
